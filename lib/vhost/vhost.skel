@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+    ServerName VAR_SERVERNAME
+    DocumentRoot /var/www/VAR_PROJECT/
+	
+	<Directory /var/www/VAR_PROJECT/>
+		Options -Indexes FollowSymLinks MultiViews
+		AllowOverride None
+		Order allow,deny
+		allow from all
+	</Directory>
+
+</VirtualHost>
+

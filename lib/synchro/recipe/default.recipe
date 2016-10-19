@@ -1,0 +1,22 @@
+#! /bin/bash
+# All function here must have "default" prefix to avoid collision function 
+default_recipe () {
+	echo "default recipe starting..."
+	echo "transfert modified file by rsync from $currentd to $chepksync_remote_dir ..."
+	start_time=`date +%s`;
+	# recipe function
+	rsync -az --delete --chmod=D775,F664 --delete-excluded --exclude-from="$EXCLUDES" $currentd/ $chepksync_username@$chepksync_host:$chepksync_remote_dir
+	# recipe function
+	default_to_execute_after
+	end_time=`date +%s`;
+	echo Executed successfully in $(expr `date +%s` - $start_time) sec;
+}
+
+# Function executed after rsync
+default_to_execute_after () {
+	now=$(date +"%m-%d-%Y-%H-%M");
+	ssh $chepksync_username@$chepksync_host <<+
+	cd $chepksync_remote_dir;
+	touch LAST_REVISION_$now;
++
+}

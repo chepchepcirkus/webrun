@@ -1,0 +1,36 @@
+#! /bin/bash
+# $1 host
+# $2 user
+# $3 ssh_key
+# $4 current_dir
+# $5 remote_dir
+git_recipe () {
+	echo "default recipe starting..."
+	echo "transfert modified file by rsync from $currentd to $chepksync_remote_dir ..."
+	start_time=`date +%s`;
+	#@TODO git gc gti bundle MAKE BUNDLE here
+	to_execute_before
+	rsync -az --delete --chmod=D775,F664 --delete-excluded --exclude-from="$EXCLUDES" $currentd/ $chepksync_username@$chepksync_host:$chepksync_remote_dir
+	to_execute_after
+	end_time=`date +%s`;
+	echo Executed successfully in $(expr `date +%s` - $start_time) sec;
+}
+
+# CHECK ABOUT SPACE
+# MAKE ARCHITECTURE if not exists
+to_execute_before () {
+	ssh $chepksync_username@$chepksync_host <<+
+	cd $chepksync_remote_dir;
+	mkdir okiiiii;
++
+}
+# GIT CLONE or UNBUNDLE
+# WRITE REVISION
+# CLEAN THING
+# REDIRECT current to current
+to_execute_after () {
+	ssh $chepksync_username@$chepksync_host <<+
+	cd $chepksync_remote_dir;
+	mkdir okiiiii;
++
+}
