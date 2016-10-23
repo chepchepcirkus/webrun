@@ -60,3 +60,11 @@ chepk_unlock () {
 		chepk_echo "no lock file found" warning
 	fi
 }
+
+# Trim var
+trim() {
+    local var="$*"
+    var="${var#"${var%%[![:space:]]*}"}"   # remove leading whitespace characters
+    var="${var%"${var##*[![:space:]]}"}"   # remove trailing whitespace characters
+    echo -n "$var"
+}
