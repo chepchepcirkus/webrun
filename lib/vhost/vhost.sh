@@ -109,22 +109,21 @@ removeVhost() {
         a2dissite $vhost
         # read vhost file
         # grep root folder from vhost file
-        documentRoot=$(trim "$(sudo cat /etc/apache2/sites-available/$vhost | grep 'DocumentRoot')")
-        #@TODO a revoir pk ?????
-        documentRoot="/var/www/"${var%[[:space:]]*}
-        echo $documentRoot
+        documentRootLine=$(trim "$(sudo cat /etc/apache2/sites-available/$vhost | grep 'DocumentRoot')")
+        documentRoot=${documentRootLine##*[[:space:]]}
         
         if [ -d $documentRoot ] && [ $documentRoot != "/var/www/" ]
         then
-            chepk_echo "delete folder"
+            chepk_echo $documentRoot" has been deleted"
             # remove root folder
-            #rm -rf $documentRoot
+            rm -rf $documentRoot
             # remove vhost
-            #rm -rf /etc/apache2/sites-available/$vhost
+            chepk_echo '/etc/apache2/sites-available/$vhost has been deleted'
+            rm -rf /etc/apache2/sites-available/$vhost
             # restart apache
             service apache2 restart
         else
-            chepk_echo "Document root folder is missing in vhost file"
+            chepk_echo "Document root folder is missing in vhost file" error
         fi
         
         
