@@ -1,0 +1,3 @@
+database_name="VAR_DATABASE"
+database_username="VAR_USERNAME"
+database_password="VAR_PASSWORD"
