@@ -39,8 +39,8 @@ main() {
         # vhost
         v) source $chepk_libd/vhost/vhost.sh ;;
         # Bdd management
-        bdd) chepk_echo "Bdd management work in progress" ;;
-        # Bdd management
+        bdd) source $chepk_libd/database/mysql/manage.sh ;;
+        # Deploy
         d) chepk_echo "Deploy" ;;
         # Build doc
         b) source $chepk_libd/documentation/buildDoc.sh ;;
