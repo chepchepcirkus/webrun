@@ -126,8 +126,6 @@ removeVhost() {
             chepk_echo "Document root folder is missing in vhost file" error
         fi
         
-        
-        
     else
         chepk_echo "virtualhost does not exists." error
         chepk_echo_empty

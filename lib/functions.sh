@@ -61,10 +61,41 @@ chepk_unlock () {
 	fi
 }
 
+# Loader
+# TODO implements
+chepk_loader () {
+	i=1
+    sp="/-\|"
+    echo -n ' '
+    while true
+    do
+        sleep 0.1
+        printf "\b${sp:i++%${#sp}:1}"
+    done
+}
+
+function ProgressBar {
+# Process data
+    let _progress=(${1}*100/${2}*100)/100
+    let _done=(${_progress}*4)/10
+    let _left=40-$_done
+# Build progressbar string lengths
+    _fill=$(printf "%${_done}s")
+    _empty=$(printf "%${_left}s")
+
+# 1.2 Build progressbar strings and print the ProgressBar line
+# 1.2.1 Output example:
+# 1.2.1.1 Progress : [########################################] 100%
+printf "\rProgress : [${_fill// /#}${_empty// /-}] ${_progress}%%\r"
+
+}
+
 # Trim var
+# remove leading whitespace characters
+# remove trailing whitespace characters
 trim() {
-    local var="$*"
-    var="${var#"${var%%[![:space:]]*}"}"   # remove leading whitespace characters
-    var="${var%"${var##*[![:space:]]}"}"   # remove trailing whitespace characters
+    var="$*"
+    var="${var#"${var%%[![:space:]]*}"}"
+    var="${var%"${var##*[![:space:]]}"}"
     echo -n "$var"
 }
