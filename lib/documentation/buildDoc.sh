@@ -48,9 +48,8 @@ buildDoc() {
                 if [ -f $i ]
                 then
                     count=$((count + 1))
-                    sleep 0.5
+                    chepk_progressBar count total
                     awk -f $chepk_libd/documentation/bash_doc.awk $i >> $path/$docFileName.md
-                    ProgressBar count total
                 fi  
             done
             ProgressBar count total

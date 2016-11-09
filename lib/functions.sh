@@ -1,9 +1,8 @@
 ## FUNCTIONS #####
 
-# Custom echo function
-# args
-#	state
-#	separator	
+#@name chepk_echo
+#@description Custom echo function, handle state by color
+#@args string to echo | state : error, warning, success | add a separator at the top
 chepk_echo () {
 	
 	# Separator
@@ -36,7 +35,7 @@ chepk_echo_empty () {
 
 ## SEPARATOR ##
 chepk_echo_separator () {
-	echo '#####################################################\r\n'
+	echo '\e[36m#####################################################\e[0m\r\n'
 }
 
 ## Check / Lock directory ##
@@ -61,33 +60,18 @@ chepk_unlock () {
 	fi
 }
 
-# Loader
-# TODO implements
-chepk_loader () {
-	i=1
-    sp="/-\|"
-    echo -n ' '
-    while true
-    do
-        sleep 0.1
-        printf "\b${sp:i++%${#sp}:1}"
-    done
-}
-
-function ProgressBar {
-# Process data
-    let _progress=(${1}*100/${2}*100)/100
-    let _done=(${_progress}*4)/10
-    let _left=40-$_done
-# Build progressbar string lengths
-    _fill=$(printf "%${_done}s")
-    _empty=$(printf "%${_left}s")
-
-# 1.2 Build progressbar strings and print the ProgressBar line
-# 1.2.1 Output example:
-# 1.2.1.1 Progress : [########################################] 100%
-printf "\rProgress : [${_fill// /#}${_empty// /-}] ${_progress}%%\r"
-
+#@name chepk_progressBar
+#@description display a progress bar
+#@description call this function for each step throw a while or a for loop
+#@args current step | total steps
+chepk_progressBar () {
+    progress=$(((${1}*100/${2}*100)/100 ))
+	done=$(((${progress}*4)/10))
+    left=$((40-$done))
+    fill=$(printf "%${done}s")
+    empty=$(printf "%${left}s")
+	printf "\rProgress : [${fill// /=}${empty// /.}] ${progress}%%\r"
+	sleep 0.1
 }
 
 # Trim var
