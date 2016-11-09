@@ -3,7 +3,7 @@
 #@name chepk_echo
 #@description Custom echo function, handle state by color
 #@args string to echo | state : error, warning, success | add a separator at the top
-chepk_echo () {
+function chepk_echo () {
 	
 	# Separator
 	local separator=''
@@ -29,17 +29,17 @@ chepk_echo () {
 }
 
 ## Empty LINE ##
-chepk_echo_empty () {
+function chepk_echo_empty () {
 	echo -e ''
 }
 
 ## SEPARATOR ##
-chepk_echo_separator () {
+function chepk_echo_separator () {
 	echo '\e[36m#####################################################\e[0m\r\n'
 }
 
 ## Check / Lock directory ##
-chepk_lock () {
+function chepk_lock () {
 	if [ -e $1/chepksync.lock ]
 	then
 		chepk_echo "process already in use ..." error
@@ -51,7 +51,7 @@ chepk_lock () {
 }
 
 # Check / UnLock directory
-chepk_unlock () {
+function chepk_unlock () {
 	if [ -e $1/chepksync.lock ]
 	then
 		rm $currentd/chepksync.lock
@@ -64,7 +64,7 @@ chepk_unlock () {
 #@description display a progress bar
 #@description call this function for each step throw a while or a for loop
 #@args current step | total steps
-chepk_progressBar () {
+function chepk_progressBar () {
     progress=$(((${1}*100/${2}*100)/100 ))
 	done=$(((${progress}*4)/10))
     left=$((40-$done))
@@ -77,7 +77,7 @@ chepk_progressBar () {
 # Trim var
 # remove leading whitespace characters
 # remove trailing whitespace characters
-trim() {
+function trim() {
     var="$*"
     var="${var#"${var%%[![:space:]]*}"}"
     var="${var%"${var##*[![:space:]]}"}"

@@ -9,7 +9,7 @@ sitesAvailable='/etc/apache2/sites-available/'
 userDir='/var/www/'
 
 ## Add vhost ##
-addVhost () {
+function addVhost () {
     chepk_echo " >> Set up a new virtualhost" '' separator
     chepk_echo_empty
 
@@ -95,7 +95,7 @@ addVhost () {
 }
 
 ## Remove vhost ##
-removeVhost() {
+function removeVhost() {
     chepk_echo " >> Remove an existing virtualhost" '' separator
     chepk_echo_empty
 
@@ -134,10 +134,10 @@ removeVhost() {
 }
 
 ## VHOST MENU ##
-vhostMenu() {
+function vhostMenu() {
     chepk_echo "Vhost management : " '' separator
-    chepk_echo " > add a new vhost (a)"
-    chepk_echo " > remove a vhost (r)"
+    chepk_echo " > (v) add a new vhost"
+    chepk_echo " > (r) remove a vhost"
 
     read choice;
 

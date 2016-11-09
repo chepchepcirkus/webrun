@@ -19,19 +19,24 @@ fi
 source $chepk_libd/functions.sh
 
 ## TEST FUNCTION ##
-ftest() {
+function ftest() {
     chepk_echo 'this is a test'
-    filesToParse=$(find /var/www/webrun -name '*.sh')
-    total=$(echo "$filesToParse" | wc -l)
-    echo $total
+    count=0
+    total=10
+    while [ ! $count = $total ]
+    do
+		sleep 0.5
+		count=$(( count + 1))
+		chepk_progressBar $count $total
+    done
 }
 
 ## MAIN MENU ##
-main() {
+function main() {
     chepk_echo "Choose an action : " '' separator
-    chepk_echo " > set up a vhost (v)"
-    chepk_echo " > manage database (bdd)"
-    chepk_echo " > build documentation (b)"
+    chepk_echo " > (v) set up a vhost"
+    chepk_echo " > (bdd) manage database"
+    chepk_echo " > (d) build documentation"
 
     read choice;
 
