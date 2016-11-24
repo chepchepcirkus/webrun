@@ -64,15 +64,14 @@ function databaseMenu() {
 		# dump and restore a database
 		dr) chepk_echo "dump and restore work in progress"
 			source $chepk_libd/database/mysql/dump.sh
-			dump_db_remote_host $chepk_libd/database/config/poldol.cfg
+			
 			# choose source config file
 			# choose destination config file
 			# check if source is on remote host SOURCE_REMOTE_HOST_FLAG
+			dump_db_remote_host $chepk_libd/database/config/poldol.cfg
+			if []
 			# check if dest is on remote host DEST_REMOTE_HOST_FLAG
-			
-			## if SOURCE_REMOTE_HOST_FLAG
-			## connect
-			# dump source
+			get_dump_from_remote_host 
 			# restore
 		;;
 		# exit
