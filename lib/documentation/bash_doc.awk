@@ -15,24 +15,34 @@
 }
 {
     if($1 == "#@description") {
-        print substr($0,15); print "\r"
+        print "> "substr($0,15); print "\r"
     }
 }
 {
     if($1 == "#@args") {
-        print "Arguments to use:\r\n"
+        print "| Arguments | Description / Example |"
+        print "| --------- | --------------------- |"
+
         for (i=NF; i>1; i--) {
-            if( $i == "|") {
-                print arg
-                arg=""
-            } else {
+            if( $i == "|")
+            {
+                print "| "arg
+                arg="| "
+            }
+            else if($i == ":")
+            {
+                arg=" | "arg
+            }
+            else
+            {
                 arg=$i" "arg
             }
         }
         
         if(arg) {
-            print " "arg
+            print "| "arg
         }
+        arg=""
     }
 }
 {

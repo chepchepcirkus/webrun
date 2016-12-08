@@ -1,4 +1,5 @@
-#! /bin/bash
+#!/usr/bin/env bash
+# Deployment of project
 
 ## INIT ##
 currentd=$PWD

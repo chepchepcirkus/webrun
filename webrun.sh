@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
 #@main Webrun
 #@intro Webrun is a library of bash script usefull for repititive of everyday web developpement tasks
@@ -34,24 +34,26 @@ function ftest() {
 ## MAIN MENU ##
 function main() {
     chepk_echo "Choose an action : " '' separator
-    chepk_echo " > (v) set up a vhost"
-    chepk_echo " > (bdd) manage database"
-    chepk_echo " > (d) build documentation"
+    modules=$(find $chepk_libd/* -maxdepth 2 -name 'runner.sh')
+    count=0
+    for i in $modules
+    do
+       command[count]=$i
+       module=$(head -2 $i | tail -1)
+       chepk_echo " $count > ${module#*[[:space:]]}"
+       count=$((count + 1))
+    done
 
     read choice;
 
-    case $choice in
-        # vhost
-        v) source $chepk_libd/vhost/vhost.sh ;;
-        # Bdd management
-        bdd) source $chepk_libd/database/mysql/manage.sh ;;
-        # Deploy
-        d) chepk_echo "Deploy" ;;
-        # Build doc
-        b) source $chepk_libd/documentation/buildDoc.sh ;;
-        *) chepk_echo "This is not an available action, please retry..." error
-        main ;;
-    esac
+    if [ "${command[$choice]}" = "" ]
+    then
+        chepk_echo "This is not an available action, please retry..." error
+        main
+    else
+        source ${command[$choice]}
+    fi
+    exit 0
 }
 
 chepk_echo 'Author : s.servanton@gmail.com 

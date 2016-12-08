@@ -1,4 +1,5 @@
-#! /bin/bash
+#!/usr/bin/env bash
+# Set up a vhost
 
 ## parameters ##
 rootDir=$3

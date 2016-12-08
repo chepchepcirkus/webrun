@@ -1,4 +1,5 @@
-#! /bin/bash
+#!/usr/bin/env bash
+# Build documentation
 
 #@name buildDoc
 #@description This will automatically build the README.md with all functions name with respective arguments and descriptions. 
@@ -7,7 +8,7 @@
 #@description   #@intro introduction for main programm
 #@description   #@name function name
 #@description   #@description function description
-#@description   #args arguments separated by |
+#@description   #args argument label and description separated by : then previous argument group separated by |
 #@description   #@example an example of your function in use
 buildDoc() {
     
@@ -37,10 +38,10 @@ buildDoc() {
     
     case $language in
         # bash / sh
-        sh) 
-            #TODO check order of find file to construct doc file in the right order
-            filesToParse=$(find $path -name '*.sh')
+        sh)
+            filesToParse=$(find $path -name '*.sh' | cat | sort -r)
             chepk_echo " > Your documentation file is under construction..."
+            chepk_echo_empty
             count=0
             total=$(($(echo "$filesToParse" | wc -l) + 1 ))
             for i in $filesToParse
@@ -52,7 +53,8 @@ buildDoc() {
                     awk -f $chepk_libd/documentation/bash_doc.awk $i >> $path/$docFileName.md
                 fi  
             done
-            ProgressBar count total
+            count=$((count + 1))
+            chepk_progressBar count total
             ;;
         # php
         php) chepk_echo "php documentation file (work in progress...)" ;;
@@ -61,8 +63,12 @@ buildDoc() {
     esac
     
     # success
+    chepk_echo_empty
+    chepk_echo_empty
     chepk_echo "$count files have been parsed ."
+    chepk_echo_empty
     chepk_echo "$path/$docFileName.md has been successfully created." success
+    chepk_echo_empty
     
     return 0
 }

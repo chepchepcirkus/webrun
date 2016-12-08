@@ -1,8 +1,10 @@
+#! /usr/bin/env bash
+
 ## FUNCTIONS #####
 
 #@name chepk_echo
 #@description Custom echo function, handle state by color
-#@args string to echo | state : error, warning, success | add a separator at the top
+#@args string : string to echo | state : error, warning, success | separator : "separator" add a separator at the top
 function chepk_echo () {
 	
 	# Separator
@@ -63,7 +65,7 @@ function chepk_unlock () {
 #@name chepk_progressBar
 #@description display a progress bar
 #@description call this function for each step throw a while or a for loop
-#@args current step | total steps
+#@args current step : integer | total steps : integer
 function chepk_progressBar () {
     progress=$(((${1}*100/${2}*100)/100 ))
 	done=$(((${progress}*4)/10))

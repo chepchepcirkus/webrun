@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Manage your database
 
 function create_db_config_file () {
 	chepk_echo "Enter database name : "
