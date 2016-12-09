@@ -1,22 +1,40 @@
 { 
     if( $1 == "#@main") {
-        print "# " $2 " #"; print "\r"
+        print "# " substr($0,7) " #";
+    }
+}
+{ 
+    if( $1 == "#@title") {
+        print "## " substr($0,8)  " ##";
+    }
+}
+{ 
+    if( $1 == "#@sub-title") {
+        print "### " substr($0,12)  " ###";
     }
 }
 { 
     if( $1 == "#@intro") {
-        print substr($0,9); print "\r"
+        print substr($0,9);
     }
 }
 { 
     if( $1 == "#@name") {
-        print "## " $2 " ##"; print "\r"
+        print "#### " $2 " ####";
     }
 }
 {
-    if($1 == "#@description") {
-        print "> "substr($0,15); print "\r"
+    if(lock == "desc" && $1 != "#@desc") {
+		lock="desc";
+		print "> "substr($0,2);
     }
+
+	if($1 == "#@desc" && lock == "desc") {
+		lock="";
+	}
+	else if($1 == "#@desc" && lock == "") {
+		lock="desc";
+	}
 }
 {
     if($1 == "#@args") {
@@ -47,7 +65,7 @@
 }
 {
     if( $1 == "#@example" ) {
-        print "\r\nExample:\r\n"
+        print "Example:"
         print " >"substr($0,10)
     }
 }
