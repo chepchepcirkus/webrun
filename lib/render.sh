@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-#@title Render Functions
+#@title-3 Render Functions
 #@intro Render custom output with state color
 #@intro Fill free to add all your tips functions here ;)
 
@@ -37,7 +37,7 @@ function chk_echo () {
 function render_chk_echo () {
     if [ "$chk_cli" == "0" ]
     then
-        echo -e $3"\e["$2 $1 "\e[0m"
+        echo -e $3"\e["$2 $1 "\e[0m\r"
     else
         chk_prefix=""
         case $1 in

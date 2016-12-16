@@ -6,8 +6,8 @@
 # This will automatically build the README.md with all functions name with respective arguments and descriptions.
 # Respect the following convention to have the right output :
 #
-#    #@main main name
-#    #@intro introduction for main programm
+#    #@title-(1,2,3...) Title
+#    #@intro use it as main description
 #    #@name function name
 #    #@desc
 #    # function description
@@ -50,18 +50,32 @@ buildDoc() {
     case $language in
         # bash / sh
         "sh")
-            filesToParse=$(find $path -name '*.sh' | cat | sort -r)
+            directories=$(find $path -type d)
+            declare -a fileOrdered
+            for i in $directories
+            do
+                if [ -d $i ]
+                then
+                   filesToParse=$(find $i -maxdepth 1 -name '*.sh' | cat | sort)
+                   for j in $filesToParse
+                   do
+                        fileOrdered=("${fileOrdered[@]}" "$j")
+                   done
+                fi
+            done
+#            echo ${fileOrdered[@]}
             chk_echo " > Your documentation file is under construction..."
             chk_echo_empty
             count=0
-            total=$(($(echo "$filesToParse" | wc -l) + 1 ))
-            for i in $filesToParse
+            total=$((${#fileOrdered[@]} + 1 ))
+            for i in ${fileOrdered[@]}
             do
                 if [ -f $i ]
                 then
                     count=$((count + 1))
                     chk_progressBar count total
                     awk -vlock="" -f $chk_module_d/documentation/bash_doc.awk $i >> $path/$docFileName.md
+                    echo "" >> $path/$docFileName.md
                 fi  
             done
             count=$((count + 1))
@@ -79,6 +93,10 @@ buildDoc() {
     chk_echo "$count files have been parsed ."
     chk_echo_empty
     chk_echo "$path/$docFileName.md has been successfully created." success
+    chk_echo_empty
+
+    chk_echo "To regenerate it, use these arguments:"
+    chk_echo "-cli documentation $language $path $docFileName"
     chk_echo_empty
     
     return 0

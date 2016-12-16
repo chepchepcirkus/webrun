@@ -1,16 +1,13 @@
-{ 
-    if( $1 == "#@main") {
-        print "# " substr($0,7) " #";
-    }
-}
-{ 
-    if( $1 == "#@title") {
-        print "## " substr($0,8)  " ##";
-    }
-}
-{ 
-    if( $1 == "#@sub-title") {
-        print "### " substr($0,12)  " ###";
+#!/bin/awk -f
+BEGIN{}
+{
+
+    if( $1 ~ /#@title-/) {
+        nTime=substr($1,9)
+        for(c=0;c<nTime;c++) printf "#"
+        printf substr($0,10) " "
+        for(c=0;c<nTime;c++) printf "#"
+        print ""
     }
 }
 { 
@@ -31,6 +28,7 @@
 
 	if($1 == "#@desc" && lock == "desc") {
 		lock="";
+		print ""
 	}
 	else if($1 == "#@desc" && lock == "") {
 		lock="desc";
@@ -69,3 +67,4 @@
         print " >"substr($0,10)
     }
 }
+END{}

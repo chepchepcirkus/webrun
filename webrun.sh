@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-#@main Webrun
+#@title-1 Webrun
 #@intro Webrun is a library of bash script usefull for repititive web developpement tasks of everyday.
 
 ## Error Handling
@@ -29,14 +29,22 @@ source $chk_lib_d/functions.sh
 
 ## TEST FUNCTION ##
 function ftest() {
-    chk_echo 'this is a test'
-    count=0
-    total=10
-    while [ ! $count = $total ]
+    directories=$(find $path -type d)
+    fileOrdered=()
+    for i in $directories
     do
-		sleep 0.5
-		count=$(( count + 1))
-		chk_progressBar $count $total
+        if [ -d $i ]
+        then
+           filesToParse=$(find $i -maxdepth 1 -name '*.sh' | cat | sort)
+           for j in $filesToParse
+           do
+                fileOrdered=("${fileOrdered[@]}" "$j")
+           done
+        fi
+    done
+    for i in ${fileOrdered[@]}
+    do
+        echo $i
     done
 }
 
@@ -64,16 +72,14 @@ function main() {
     fi
 }
 
-
-# Display header
-
 chk_echo 'Author : s.servanton@gmail.com
- _       __          __             ____                 
-| |     / /  ___    / /_           / __ \  __  __   ____ 
+ _       __          __             ____
+| |     / /  ___    / /_           / __ \  __  __   ____
 | | /| / /  / _ \  / __ \         / /_/ / / / / /  / __ \
 | |/ |/ /  /  __/ / /_/ /        / _, _/ / /_/ /  / / / /
-|__/|__/   \___/ /_.___/        /_/ |_|  \__,_/  /_/ /_/ 
-                                                         ' success separator
+|__/|__/   \___/ /_.___/        /_/ |_|  \__,_/  /_/ /_/
+
+'
 
 # Detect test function
 if [ "$1" == "test" ]

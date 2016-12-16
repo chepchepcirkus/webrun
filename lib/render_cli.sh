@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#@title Cli Render Functions
+#@title-3 Cli Render Functions
 #@intro These functions will be available in all module executed in cli to render output in a log file
 #@intro Fill free to add all your tips functions here ;)
 
