@@ -72,13 +72,12 @@ function main() {
     fi
 }
 
-chk_echo 'Author : s.servanton@gmail.com
+echo 'Author : s.servanton@gmail.com
  _       __          __             ____
 | |     / /  ___    / /_           / __ \  __  __   ____
 | | /| / /  / _ \  / __ \         / /_/ / / / / /  / __ \
 | |/ |/ /  /  __/ / /_/ /        / _, _/ / /_/ /  / / / /
 |__/|__/   \___/ /_.___/        /_/ |_|  \__,_/  /_/ /_/
-
 '
 
 # Detect test function
