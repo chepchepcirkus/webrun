@@ -1,4 +1,4 @@
-/usr/local/bin/npm
+/usr/local/npm
 /usr/local/bin/node
 /usr/local/lib/node_modules/
 /usr/local/include/node/
