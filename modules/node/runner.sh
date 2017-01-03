@@ -121,6 +121,7 @@ function remove_node() {
 #@name Nodejs library management
 #@desc
 # You can do the following action:
+#
 # do a fresh install of node and npm
 # or clean all node component from your environement
 #@desc

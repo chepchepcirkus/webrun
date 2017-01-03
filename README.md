@@ -3,11 +3,14 @@ Webrun is a library of bash script usefull for repititive web developpement task
 
 ## Module ##
 The programm is composed of many modules locate in the folder lib,
-a module structure need to met these conditions :
+a module structure need to meet these conditions :
 >  MODULE_FOLDER / runner.sh
->        runner.sh must begin the two following line :
-> 		\#!/usr/bin/env bash
-> 		\# Name of your module that will be used in the modules menu
+> 
+>  runner.sh must begin the two following line :
+> 
+> 		#!/usr/bin/env bash
+> 		# Name of your module that will be used in the modules menu
+> 
 
 
 #### buildDoc ####
@@ -22,6 +25,22 @@ a module structure need to met these conditions :
 >     #@desc
 >     #args argument label and description separated by : then previous argument group separated by |
 >     #@example an example of your function in use
+
+Example : 
+>  You can easily generate documentation file as cli command
+> 
+>      bash webrun.sh -cli documentation {LANGUAGE} {PATH} {DOC_FILE_NAME}
+> 
+>  Example to generate this documentation file just run
+> 
+>      bash webrun.sh -cli documentation sh . README
+> 
+
+
+#### Nodejs ####
+>  You can do the following action:
+>  do a fresh install of node and npm
+>  or clean all node component from your environement
 
 
 #### dump_database ####

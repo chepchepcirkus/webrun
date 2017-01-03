@@ -15,6 +15,17 @@
 #    #args argument label and description separated by : then previous argument group separated by |
 #    #@example an example of your function in use
 #@desc
+#@example
+# You can easily generate documentation file as cli command
+#
+#     bash webrun.sh -cli documentation {LANGUAGE} {PATH} {DOC_FILE_NAME}
+#
+# Example to generate this documentation file just run
+#
+#     bash webrun.sh -cli documentation sh . README
+#
+#@example
+
 buildDoc() {
     if [ "$chk_cli" == "0" ]
     then

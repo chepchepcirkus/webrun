@@ -62,9 +62,18 @@ BEGIN{}
     }
 }
 {
-    if( $1 == "#@example" ) {
-        print "Example:"
-        print " >"substr($0,10)
+    if(lock == "example" && $1 != "#@example") {
+		lock="example";
+		print "> "substr($0,2);
     }
+
+	if($1 == "#@example" && lock == "example") {
+		lock="";
+		print ""
+	}
+	else if($1 == "#@example" && lock == "") {
+		lock="example";
+		print "Example : "
+	}
 }
 END{}
