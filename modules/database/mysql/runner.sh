@@ -10,6 +10,8 @@ function create_db_config_file () {
     read password
     chk_echo "Enter host of database : "
     read db_host
+    chk_echo "Enter port of database : "
+    read db_port
     db_host_user=''
     db_host_identify_key=''
 
@@ -19,12 +21,12 @@ function create_db_config_file () {
     if [ $is_remote_db == "y" ]
     then
         chk_echo "Enter user on remote server : "
-        read db_user_host
+        read db_remote_user_host
 
         chk_echo "Enter identify key file path : "
-        read db_host_identify_key
+        read db_remote_host_identify_key
     fi
-	awk '{sub("VAR_DATABASE", "'$databaseName'"); sub("VAR_USERNAME", "'$userName'"); sub("VAR_PASSWORD", "'$password'"); sub("VAR_HOST", "'$db_host'"); sub("VAR_USER_HOST", "'$db_user_host'"); sub("VAR_IDENTIFY_HOST_KEY_PATH", "'$db_host_identify_key'"); print}' $chk_module_d/database/config/config.skel > $chk_module_d/database/config/$databaseName.cfg
+	awk '{sub("VAR_DATABASE", "'$databaseName'"); sub("VAR_USERNAME", "'$userName'"); sub("VAR_PASSWORD", "'$password'"); sub("VAR_HOST", "'$db_host'"); sub("VAR_PORT", "'$db_port'"); sub("VAR_USER_HOST", "'$db_remote_user_host'"); sub("VAR_IDENTIFY_HOST_KEY_PATH", "'$db_remote_host_identify_key'"); print}' $chk_module_d/database/config/config.skel > $chk_module_d/database/config/$databaseName.cfg
 	chk_echo " > $databaseName configuration file created !" success
 	databaseMenu
 }

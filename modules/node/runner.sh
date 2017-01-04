@@ -107,7 +107,7 @@ function remove_node() {
     path_to_remove=`cat $chk_module_d/node/node_path.txt`;
     while read p
     do
-        if [ -d $p ]||[ -f $p ];
+        if [ -d $p ]||[ -f $p ]
         then
             sudo rm -rf $p
             chk_echo $p ''
