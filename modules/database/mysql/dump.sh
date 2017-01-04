@@ -14,26 +14,45 @@ function_var_dump_database='function dump_database() {
 	else
 		return 1;
 	fi
-}'
+}';
 #eval $function_var_dump_database
+function dump_database() {
+    if [[ "$5" == '' || ! -d $5 ]]
+    then
+        dest="/tmp"
+    else
+        dest=$5
+    fi
+	RESULT=`mysqlshow -v --user=$1 --password=$2 $3| grep -v Wildcard | grep -o $3`
+	if [ "$RESULT" == $3 ]
+	then
+		mysqldump -u $1 -p$2 $3 > $dest/$4.sql
+		return 0
+	else
+		return 1
+	fi
+}
 
 function dump_db_remote_host() {
 	# check if config file exists $1
 	source $1
-	dump_name=$(date +"%m-%d-%Y-%H-%M")
+	dump_name=$2
 	ssh -T $db_host_user@$db_host <<+
 $function_var_dump_database;
 dump_database $db_username $db_password $db_name $dump_name;
-if [ $ == 0 ]
+if [ "$?" == "0" ]
 then
 	tar -cf /tmp/$dump_name.tar /tmp/$dump_name.sql;
-	return 0;
+	exit 0;
 else
-	return 1;
+	exit 1;
 fi
 +
-if [ $ == 0 ]
+if [ "$?" == "0" ]
 then
-	rsync -e "ssh $db_host_user@$db_host:/tmp/$dump_name.tar /tmp/
+    new_dump_name=$db_name-`date +"%m-%d-%Y-%H-%M"`;
+	rsync -zr -e ssh $db_host_user@$db_host:/tmp/$dump_name.tar /tmp/$new_dump_name.tar
+else
+    chk_echo "dump_db_remote_host error"
 fi
 }

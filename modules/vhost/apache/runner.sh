@@ -10,7 +10,7 @@ sitesAvailable='/etc/apache2/sites-available/'
 userDir='/var/www/'
 
 ## Add vhost ##
-function addVhost () {
+function addApacheVhost () {
     chk_echo " >> Set up a new virtualhost" '' separator
     chk_echo_empty
 
@@ -96,7 +96,7 @@ function addVhost () {
 }
 
 ## Remove vhost ##
-function removeVhost() {
+function removeApacheVhost() {
     chk_echo " >> Remove an existing virtualhost" '' separator
     chk_echo_empty
 
@@ -144,9 +144,9 @@ function vhostMenu() {
 
     case $choice in
         # add
-        a) addVhost ;;
+        a) addApacheVhost ;;
         # remove
-        r) removeVhost ;;
+        r) removeApacheVhost ;;
     esac    
 }
 

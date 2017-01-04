@@ -48,9 +48,9 @@ buildDoc() {
         chk_echo "(if the file already exists, it will overwrite)"
         read docFileName
     else
-        language=$1
-        path=$2
-        docFileName=$3
+        language=$3
+        path=$4
+        docFileName=$5
     fi
 
     if [ -f $path/$docFileName.md ]
@@ -114,4 +114,4 @@ buildDoc() {
 }
 
 chk_echo " >> Build documentation of your project" '' separator
-buildDoc $1 $2 $3
+buildDoc $*

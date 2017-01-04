@@ -29,23 +29,7 @@ source $chk_lib_d/functions.sh
 
 ## TEST FUNCTION ##
 function ftest() {
-    directories=$(find $path -type d)
-    fileOrdered=()
-    for i in $directories
-    do
-        if [ -d $i ]
-        then
-           filesToParse=$(find $i -maxdepth 1 -name '*.sh' | cat | sort)
-           for j in $filesToParse
-           do
-                fileOrdered=("${fileOrdered[@]}" "$j")
-           done
-        fi
-    done
-    for i in ${fileOrdered[@]}
-    do
-        echo $i
-    done
+    chk_echo 'this is a test'
 }
 
 ## MAIN MENU ##
@@ -95,7 +79,7 @@ if [ "$chk_cli" == "1" ]
 then
     if [ -e $chk_module_d/$2/runner.sh ]
     then
-        source $chk_module_d/$2/runner.sh $3 $4 $5
+        source $chk_module_d/$2/runner.sh $*
     else
         chk_echo $2" unknown module name" error
     fi
