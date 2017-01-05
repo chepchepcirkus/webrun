@@ -6,11 +6,13 @@ The programm is composed of many modules locate in the folder lib,
 a module structure need to meet these conditions :
 >  MODULE_FOLDER / runner.sh
 > 
->  runner.sh must begin the two following line :
+>  runner.sh must begin with the two following line :
 > 
 > 		#!/usr/bin/env bash
 > 		# Name of your module that will be used in the modules menu
 > 
+
+
 
 
 #### buildDoc ####
@@ -37,28 +39,37 @@ Example :
 > 
 
 
-#### Nodejs ####
->  You can do the following action:
->  do a fresh install of node and npm
->  or clean all node component from your environement
+## Mysql module ##
+>  You can easly manage your (remote) database dump / restore
+>  Create a config file with all informations about your database instance
 
 
 #### dump_database ####
 | Arguments | Description / Example |
 | --------- | --------------------- |
-| output file name 
-| database name | 
-| password | 
-| username | 
+| mysql port  | by default 3306 
+| mysql host  | by default 127.0.0.1 | 
+| path for output file  | by default create in /tmp | 
+| output file name  | name of dump | 
+| database name  | database_name | 
+| password  | database_password | 
+| username  | database_username | 
 
 #### restore_database ####
 | Arguments | Description / Example |
 | --------- | --------------------- |
-| existing dump path  | 
-| database name  | | 
-| password  | | 
-| username  | u | 
+| mysql port  | by default 3306 
+| mysql host  | by default 127.0.0.1 | 
+| path of file to import  | absolute path | 
+| database name  | database_name | 
+| password  | database_password | 
+| username  | database_username | 
 
+
+## Nodejs library management ##
+>  You can easily manage your node / npm instance
+>  Do a fresh install
+>  Clean all node component from your environement
 
 
 

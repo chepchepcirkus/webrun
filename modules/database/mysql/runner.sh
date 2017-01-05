@@ -12,8 +12,8 @@ function create_db_config_file () {
     read db_host
     chk_echo "Enter port of database : "
     read db_port
-    db_host_user=''
-    db_host_identify_key=''
+    db_remote_host_user=''
+    db_remote_host_identify_key=''
 
     chk_echo "is the database stand on a remote server ? (y/n)"
     read is_remote_db

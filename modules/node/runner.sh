@@ -124,13 +124,6 @@ function remove_node() {
     exit 0
 }
 
-#@name Nodejs library management
-#@desc
-# You can do the following action:
-#
-# do a fresh install of node and npm
-# or clean all node component from your environement
-#@desc
 function nodejsMenu() {
     chk_echo "Nodejs : " '' separator
     chk_echo " > (i) Install"
