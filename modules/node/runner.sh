@@ -4,10 +4,16 @@
 function install_node() {
 
     # Check installation
-    HAS_NODE=`command -v node | wc -c`
-    if [[ $HAS_NODE -ne 0 ]]
+    if [ $(command -v node | wc -c) -ne 0 ]
     then
         chk_echo "node is already present : $(node -v)" error
+        chk_echo "Please first remove the installation" error
+        chk_echo_empty
+        exit 1;
+    fi
+    if [ $(command -v nodejs | wc -c) -ne 0 ]
+    then
+        chk_echo "nodejs is already present : $(nodejs -v)" error
         chk_echo "Please first remove the installation" error
         chk_echo_empty
         exit 1;
@@ -86,7 +92,7 @@ function install_node() {
     chk_echo " > Set symbolic link to use npm"
     # Mise en place du lien symbolique pour npm (qui est un module de node)
     cd /usr/local/bin/
-    ln -s "/usr/local/lib/node_modules/npm/bin/npm-cli.js" /usr/bin/npm
+    sudo ln -s "/usr/local/lib/node_modules/npm/bin/npm-cli.js" /usr/bin/npm
 
     chk_echo_empty
     chk_echo "Node => $(node -v)" warning

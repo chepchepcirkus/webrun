@@ -67,7 +67,15 @@ function databaseMenu() {
 				source $chk_module_d/database/config/$configFile.cfg
 				chk_echo " > Dump of $db_name begin"
 				date=`date +%Y-%m-%d-%H-%M-%S`
-				dump_database $db_username $db_password $db_name $db_name-$date
+                if [ "$db_host" == "" ];
+                then
+                  db_host="127.0.0.1";
+                fi
+                if [ "$db_port" == "" ];
+                then
+                  db_port="3306";
+                fi
+				dump_database "$db_username" "$db_password" "$db_name" "$db_name-$date" "/tmp" "$db_host" "$db_port" "$db_remote_host_user" "$db_remote_host"
 				chk_echo " > Dump of $db_name created in /tmp/$db_name-$date.sql" success
 			else
 			    if [ "$chk_cli" == "0" ]
@@ -83,8 +91,8 @@ function databaseMenu() {
 		r)  source $chk_module_d/database/mysql/restore.sh
 		    if [ "$chk_cli" == "0" ]
             then
-                chk_echo "Wich database would you want to dump : " '' separator
-                ls $chk_module_d/database/conf ig/*.cfg | awk -F'.' '{splitCount=split($2,splitName,"/"); print splitName[splitCount]}'
+                chk_echo "Wich database would you want to restore : " '' separator
+                ls $chk_module_d/database/config/*.cfg | awk -F'.' '{splitCount=split($2,splitName,"/"); print splitName[splitCount]}'
                 read configFile
 
                 chk_echo "sql file path to import :" '' separator
@@ -117,7 +125,15 @@ function databaseMenu() {
 
 			source $chk_module_d/database/config/$configFile.cfg
             chk_echo " > Restore of $db_name begins"
-            restore_database $db_username $db_password $db_name $sql_file
+			if [ "$db_host" == "" ];
+            then
+              db_host="127.0.0.1";
+            fi
+            if [ "$db_port" == "" ];
+            then
+              db_port="3306";
+            fi
+            restore_database "$db_username" "$db_password" "$db_name" "$sql_file" "$db_host" "$db_port" "$db_remote_host_user" "$db_remote_host"
             chk_echo " > Done !" success
 			;;
 		yz) source $chk_module_d/database/mysql/dump.sh

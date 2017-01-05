@@ -70,7 +70,7 @@ fi
 # Detect test function
 if [ "$1" == "test" ]
 then
-    ftest
+    ftest $*
     exit 0
 fi
 
