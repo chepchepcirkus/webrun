@@ -24,8 +24,14 @@ function restore_database(){
         path=${file_path%/*}
         file_name=${file_path##*/}
     	tar -cf /tmp/$file_name.tar.gz $4;
-    	rsync -zr -e ssh /tmp/$file_name.tar.gz $7@$8:/tmp/
-        ssh -T $7@$8 <<+
+
+    	ssh_command=$8@$9
+        if [ ! "$9" == "" ]
+        then
+            ssh_command="-i $9 $ssh_command"
+        fi
+        rsync -zr -e ssh /tmp/$file_name.tar.gz $ssh_command:/tmp/
+        ssh -T $ssh_command <<+
 $fct_restore_db;
 tar -xf /tmp/$file_name.tar.gz;
 restore_db "$1" "$2" "$3" "/tmp/$file_name" "$5" "$6";

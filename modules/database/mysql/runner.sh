@@ -75,7 +75,7 @@ function databaseMenu() {
                 then
                   db_port="3306";
                 fi
-				dump_database "$db_username" "$db_password" "$db_name" "$db_name-$date" "/tmp" "$db_host" "$db_port" "$db_remote_host_user" "$db_remote_host"
+				dump_database "$db_username" "$db_password" "$db_name" "$db_name-$date" "/tmp" "$db_host" "$db_port" "$db_remote_host_user" "$db_remote_host" "$db_remote_host_identify_key"
 				chk_echo " > Dump of $db_name created in /tmp/$db_name-$date.sql" success
 			else
 			    if [ "$chk_cli" == "0" ]
@@ -133,7 +133,7 @@ function databaseMenu() {
             then
               db_port="3306";
             fi
-            restore_database "$db_username" "$db_password" "$db_name" "$sql_file" "$db_host" "$db_port" "$db_remote_host_user" "$db_remote_host"
+            restore_database "$db_username" "$db_password" "$db_name" "$sql_file" "$db_host" "$db_port" "$db_remote_host_user" "$db_remote_host" "$db_remote_host_identify_key"
             chk_echo " > Done !" success
 			;;
 		yz) source $chk_module_d/database/mysql/dump.sh

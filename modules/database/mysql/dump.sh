@@ -11,14 +11,19 @@ fct_dump_db='function dump_db() {
 }';
 
 function dump_database() {
-    if [ "$8" == '' ] && [ "$9" == '' ]
+    if [ "$8" == "" ] && [ "$9" == "" ]
     then
         #local
         $fct_dump_db;
         dump_db $*
         return 0
     else
-        ssh -T $8@$9 <<+
+        ssh_command=$8@$9
+        if [ ! "${10}" == "" ]
+        then
+            ssh_command="-i ${10} $ssh_command"
+        fi
+        ssh -T $ssh_command <<+
 $fct_dump_db;
 dump_db $*;
 #echo "$?";
@@ -33,7 +38,7 @@ dump_db $*;
         if [ "$?" == "0" ]
         then
             new_dump_name=$db_name-`date +"%m-%d-%Y-%H-%M"`
-            rsync -zr -e ssh $8@$9:/tmp/$4.tar.gz /tmp/$new_dump_name.tar.gz
+            rsync -zr -e ssh $ssh_command:/tmp/$4.tar.gz /tmp/$new_dump_name.tar.gz
             tar -xf /tmp/$new_dump_name.tar.gz
             rm -f /tmp/$new_dump_name.tar.gz
         else
