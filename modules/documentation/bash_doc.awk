@@ -1,7 +1,6 @@
 #!/bin/awk -f
 BEGIN{}
 {
-
     if( $1 ~ /#@title-/) {
         nTime=substr($1,9)
         for(c=0;c<nTime;c++) printf "#"
@@ -38,25 +37,28 @@ BEGIN{}
     if($1 == "#@args") {
         print "| Arguments | Description / Example |"
         print "| --------- | --------------------- |"
-
-        for (i=NF; i>1; i--) {
+        arg=""
+        for (i=2; i<=NF; i++) {
             if( $i == "|")
             {
-                print "| "arg
+                if( substr(arg,0,2) != "|") {
+                  arg="| "arg
+                }
+                print arg"| "
                 arg="| "
             }
             else if($i == ":")
             {
-                arg=" | "arg
+                arg=arg" | "
             }
             else
             {
-                arg=$i" "arg
+                arg=arg" "$i
             }
         }
         
         if(arg) {
-            print "| "arg
+            print arg"| "
         }
         arg=""
     }
