@@ -9,9 +9,18 @@ BEGIN{}
         print ""
     }
 }
-{ 
-    if( $1 == "#@intro") {
-        print substr($0,9);
+{
+    if(lock == "intro" && $1 != "#@intro") {
+        lock="intro";
+        print substr($0,2);
+    }
+
+    if($1 == "#@intro" && lock == "intro") {
+        lock="";
+        print ""
+    }
+    else if($1 == "#@intro" && lock == "") {
+        lock="intro";
     }
 }
 { 
@@ -41,9 +50,6 @@ BEGIN{}
         for (i=2; i<=NF; i++) {
             if( $i == "|")
             {
-                if( substr(arg,0,2) != "|") {
-                  arg="| "arg
-                }
                 print arg"| "
                 arg="| "
             }

@@ -2,4 +2,7 @@
 
 # editor
 *.geany
-
+*.idea
+vendor
+composer.lock
+var

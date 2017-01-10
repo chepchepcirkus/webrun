@@ -1,7 +1,10 @@
 #@title-2 Module
-#@intro The programm is composed of many modules locate in the folder lib,
-#@intro a module structure need to meet these conditions :
+#@intro
+# The programm is composed of many modules locate in the folder lib.
+#@intro
 #@desc
+# A module structure need to meet this conditions :
+#
 # MODULE_FOLDER / runner.sh
 #
 # runner.sh must begin with the two following line :

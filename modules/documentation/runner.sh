@@ -7,7 +7,9 @@
 # Respect the following convention to have the right output :
 #
 #    #@title-(1,2,3...) Title
-#    #@intro use it as main description
+#    #@intro
+#    # use it as main description
+#    #@intro
 #    #@name function name
 #    #@desc
 #    # function description
@@ -31,7 +33,8 @@ buildDoc() {
     then
         chk_echo "From wich language would you build the documentation : " '' separator
         chk_echo " > sh / bash (sh)"
-        chk_echo " > php (php)"
+        #TODO implement a recipe for php documentation
+#        chk_echo " > php (php)"
         read language
 
         chk_echo "Enter the path of your project : "

@@ -1,8 +1,13 @@
 #! /usr/bin/env bash
 
 #@title-1 Webrun
-#@intro Webrun is a library of bash script usefull for repititive web developpement tasks of everyday.
-
+#@intro
+# Webrun is a library of bash script, with a module architecture and an interactive user interface.
+#@intro
+#@desc
+# Configuration :
+#   Architecture path is set in the config.cfg file
+#@desc
 ## Error Handling
 set -e
 
@@ -46,7 +51,6 @@ function main() {
     done
 
     read choice;
-
     if [ "${command[$choice]}" == "" ]
     then
         chk_echo "This is not an available action, please retry..." error

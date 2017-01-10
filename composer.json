@@ -1,0 +1,27 @@
+{
+    "name": "chepchepcirkus/webrun",
+    "description": "",
+    "authors": [
+        {
+            "name": "Steven Servanton",
+            "email": "s.servanton@gmail.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "chk-lib-functions",
+                "version": "1.0",
+                "source": {
+                    "url": "https://github.com/chepchepcirkus/chk-lib-functions.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        }
+    ],
+    "require" : {
+      "chk-lib-functions": "1.0"
+    }
+}
