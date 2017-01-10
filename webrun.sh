@@ -3,10 +3,17 @@
 #@title-1 Webrun
 #@intro
 # Webrun is a library of bash script, with a module architecture and an interactive user interface.
+#
+# Licence : [Open Software License 3.0 (OSL-3.0)](https://opensource.org/licenses/OSL-3.0)
+#
+# Copyright : © Steven Servanton <s.servanton@gmail.com>
+#
 #@intro
 #@desc
 # Configuration :
+#
 #   Architecture path is set in the config.cfg file
+# 
 #@desc
 ## Error Handling
 set -e
