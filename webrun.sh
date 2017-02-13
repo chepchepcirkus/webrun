@@ -17,11 +17,14 @@
 #@desc
 ## Error Handling
 set -e
+## current script path
+## allow to use the script outside of its own directory
+SCRIPT_PATH=$(dirname $0)
 
 ## INIT CONFIG
-if [ -e ./config.cfg ]
+if [ -e $SCRIPT_PATH/config.cfg ]
 then
-	source config.cfg
+	source $SCRIPT_PATH/config.cfg
 else
 	echo "There is no local config.cfg file ..."
 	exit 0 
