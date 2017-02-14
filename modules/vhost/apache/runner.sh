@@ -59,7 +59,7 @@ function addApacheVhost () {
     chk_echo " > Apache configuration begin..."
     chk_echo_empty
 
-    awk '{sub("VAR_SERVERNAME", "'$fqdn'"); sub("VAR_PROJECT", "'$project'"); print}' $chk_module_d/vhost/vhost.skel > /etc/apache2/sites-available/$project
+    awk '{sub("VAR_SERVERNAME", "'$fqdn'"); sub("VAR_PROJECT", "'$project'"); print}' $chk_module_d/vhost/apache/vhost.skel > /etc/apache2/sites-available/$project
 
     a2ensite $project
     service apache2 restart
@@ -137,7 +137,7 @@ function removeApacheVhost() {
 ## VHOST MENU ##
 function vhostMenu() {
     chk_echo "Vhost management : " '' separator
-    chk_echo " > (v) add a new vhost"
+    chk_echo " > (a) add a new vhost"
     chk_echo " > (r) remove a vhost"
 
     read choice;
