@@ -26,7 +26,7 @@ function addApacheVhost () {
     then
       chk_echo "Error : Folder already existing" error
       chk_echo "What do you want to do ?"
-      chk_echo "	> remove folder (r) / exit (e)"
+      chk_echo "	> remove folder y / n / exit (e)"
       read choice
       case $choice in
         # Exit
@@ -34,24 +34,28 @@ function addApacheVhost () {
         exit 1
         ;;
         # remove folder
-        r) rm -rf /var/www/$project
+        y) rm -rf /var/www/$project
         chk_echo " > /var/www/$project has been removed"
         ;;
+        n) ;;
       esac
     fi
 
-    ## FOLDER CREATION ##
-    chk_echo " > Create project folder"
-    chk_echo_empty
-    mkdir /var/www/$project
+    if [ $choice == "y" ]
+    then
+        ## FOLDER CREATION ##
+        chk_echo " > Create project folder"
+        chk_echo_empty
+        mkdir /var/www/$project
 
-    #cp -r ./skel/* /var/www/$project
+        #cp -r ./skel/* /var/www/$project
 
-    chown -R www-data /var/www/$project
-    chgrp -R www-data /var/www/$project
-    chmod -R 775 /var/www/$project
+        chown -R www-data /var/www/$project
+        chgrp -R www-data /var/www/$project
+        chmod -R 775 /var/www/$project
 
-    chk_echo " > Permissions set for www:www to 775 for /var/www/$project folder"
+        chk_echo " > Permissions set for www:www to 775 for /var/www/$project folder"
+    fi
 
     #awk '{sub("VAR_PROJECT_NAME", "'$project'"); print}' /root/tools/skel/public/index.php > /home/www/$project/public/index.php
 
@@ -59,10 +63,10 @@ function addApacheVhost () {
     chk_echo " > Apache configuration begin..."
     chk_echo_empty
 
-    awk '{sub("VAR_SERVERNAME", "'$fqdn'"); sub("VAR_PROJECT", "'$project'"); print}' $chk_module_d/vhost/apache/vhost.skel > /etc/apache2/sites-available/$project
+    sudo awk '{sub("VAR_SERVERNAME", "'$fqdn'"); sub("VAR_PROJECT", "'$project'"); print}' $chk_module_d/vhost/apache/vhost.skel > sudo /etc/apache2/sites-available/$project
 
-    a2ensite $project
-    service apache2 restart
+    sudo a2ensite $project
+    sudo service apache2 restart
 
     chk_echo_empty
     chk_echo " > Apache configuration done with success !" success
@@ -82,7 +86,7 @@ function addApacheVhost () {
 
     ## LOCAL HOST ##
     chk_echo_empty
-    echo "127.0.1.1    $fqdn $project" >> /etc/hosts 
+    sudo echo "127.0.1.1    $fqdn $project" >> /etc/hosts
     chk_echo " > 127.0.1.1    $fqdn $project" warning
     chk_echo " > above line added to /etc/hosts file"
     chk_echo_empty
