@@ -41,6 +41,7 @@ function databaseMenu() {
         chk_echo " > (d) dump a database"
         chk_echo " > (r) restore a database"
         chk_echo " > (dr) dump and restore a database"
+        chk_echo " > (n) SQL for a new database/user"
         chk_echo " > (e) exit"
 
 	    read choice;
@@ -170,6 +171,28 @@ function databaseMenu() {
 			#get_dump_from_remote_host dump_name
 			# restore
 		;;
+        n)
+            chk_echo "database (without space) :" warning
+            read database
+            chk_echo_empty
+            chk_echo "user (without space) :" warning
+            read user
+            chk_echo_empty
+            chk_echo "passwword :" warning
+            read password
+            chk_echo_empty
+            new_db_sql="create database DATABASE_NAME CHARACTER SET utf8 COLLATE utf8_general_ci;"
+            new_user_sql="create user 'USER_NAME'@'localhost' identified by 'PASSWORD';"
+            grant_user_sql="grant ALL PRIVILEGES on DATABASE_NAME.* to 'USERNAME'@'localhost';"
+            chk_echo "${new_db_sql/DATABASE_NAME/$database}"
+            new_user=${new_user_sql/USER_NAME/$user}
+            new_user=${new_user/PASSWORD/$password}
+            chk_echo "$new_user"
+            grant_user_sql=${grant_user_sql/DATABASE_NAME/$database}
+            grant_user_sql=${grant_user_sql/USERNAME/$user}
+            chk_echo "$grant_user_sql"
+            chk_echo_empty
+        ;;
 		# exit
 		e) main ;;
 		*) chk_echo "This is not an available action, please retry..." error
