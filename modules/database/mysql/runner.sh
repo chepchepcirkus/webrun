@@ -57,7 +57,7 @@ function databaseMenu() {
 		    if [ "$chk_cli" == "0" ]
             then
                 chk_echo "Wich database would you want to dump : " '' separator
-                ls $chk_module_d/database/config/*.cfg | awk -F'.' '{splitCount=split($2,splitName,"/"); print splitName[splitCount]}'
+                ls $chk_module_d/database/config/*.cfg | awk -F'.' '{splitCount=split($1,splitName,"/"); print splitName[splitCount]}'
 			    read configFile
 			else
 			    configFile=$4
@@ -93,7 +93,7 @@ function databaseMenu() {
 		    if [ "$chk_cli" == "0" ]
             then
                 chk_echo "Wich database would you want to restore : " '' separator
-                ls $chk_module_d/database/config/*.cfg | awk -F'.' '{splitCount=split($2,splitName,"/"); print splitName[splitCount]}'
+                ls $chk_module_d/database/config/*.cfg | awk -F'.' '{splitCount=split($1,splitName,"/"); print splitName[splitCount]}'
                 read configFile
 
                 chk_echo "sql file path to import :" '' separator
@@ -144,7 +144,7 @@ function databaseMenu() {
 			if [ "$chk_cli" == "0" ]
             then
                 chk_echo "Wich database would you want to dump : " '' separator
-                ls $chk_module_d/database/config/*.cfg | awk -F'.' '{splitCount=split($2,splitName,"/"); print splitName[splitCount]}'
+                ls $chk_module_d/database/config/*.cfg | awk -F'.' '{splitCount=split($1,splitName,"/"); print splitName[splitCount]}'
 			    read configFile
 			else
 			    configFile=$2
