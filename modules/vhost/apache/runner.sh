@@ -11,6 +11,12 @@ userDir='/var/www/'
 
 ## Add vhost ##
 function addApacheVhost () {
+    # Make sure only root can run our script
+    if [[ $EUID -ne 0 ]]; then
+       echo "This script must be run as root" 1>&2
+       exit 1
+    fi
+
     chk_echo " >> Set up a new virtualhost" '' separator
     chk_echo_empty
 
@@ -22,7 +28,8 @@ function addApacheVhost () {
     read fqdn
     chk_echo_empty
 
-    if [ -d /var/www/$project ];
+    # if project folder already exists
+    if [ -d $userDir$project ];
     then
       chk_echo "Error : Folder already existing" error
       chk_echo "What do you want to do ?"
@@ -34,11 +41,20 @@ function addApacheVhost () {
         exit 1
         ;;
         # remove folder
-        y) rm -rf /var/www/$project
-        chk_echo " > /var/www/$project has been removed"
+        y) rm -rf $userDir$project
+        chk_echo " > $userDir$project has been removed"
         ;;
         n) ;;
       esac
+    fi
+
+    # if project folder doesn't exist
+    if [ ! -d $userDir$project ];
+    then
+        chk_echo "Folder doesn't exist" warning
+        chk_echo "Would you want to create the folder ?"
+        chk_echo "	> create folder y / n / exit (e)"
+        read choice
     fi
 
     if [ $choice == "y" ]
@@ -46,27 +62,25 @@ function addApacheVhost () {
         ## FOLDER CREATION ##
         chk_echo " > Create project folder"
         chk_echo_empty
-        mkdir /var/www/$project
+        mkdir $userDir$project
+        touch $userDir$project/index.html
+        echo "<h1>"$project" Project</h1>" > $userDir$project/index.html
 
-        #cp -r ./skel/* /var/www/$project
+        chown -R www-data $userDir$project
+        chgrp -R www-data $userDir$project
+        chmod -R 775 $userDir$project
 
-        chown -R www-data /var/www/$project
-        chgrp -R www-data /var/www/$project
-        chmod -R 775 /var/www/$project
-
-        chk_echo " > Permissions set for www:www to 775 for /var/www/$project folder"
+        chk_echo " > Permissions set for www:www to 775 for $userDir$project folder"
     fi
-
-    #awk '{sub("VAR_PROJECT_NAME", "'$project'"); print}' /root/tools/skel/public/index.php > /home/www/$project/public/index.php
 
     ## APACHE ##
     chk_echo " > Apache configuration begin..."
     chk_echo_empty
 
-    sudo awk '{sub("VAR_SERVERNAME", "'$fqdn'"); sub("VAR_PROJECT", "'$project'"); print}' $chk_module_d/vhost/apache/vhost.skel > sudo /etc/apache2/sites-available/$project
+    awk '{sub("VAR_SERVERNAME", "'$fqdn'"); sub("VAR_PROJECT", "'$project'"); print}' $chk_module_d/vhost/apache/vhost.skel > /etc/apache2/sites-available/$project
 
-    sudo a2ensite $project
-    sudo service apache2 restart
+    a2ensite $project
+    service apache2 restart
 
     chk_echo_empty
     chk_echo " > Apache configuration done with success !" success
@@ -77,7 +91,7 @@ function addApacheVhost () {
     read choice
     case $choice in
         y) 
-            cd /var/www/$project
+            cd $userDir$project
             git init
             ;;
         n) 
@@ -86,7 +100,7 @@ function addApacheVhost () {
 
     ## LOCAL HOST ##
     chk_echo_empty
-    sudo echo "127.0.1.1    $fqdn $project" >> /etc/hosts
+    echo "127.0.1.1    $fqdn $project" >> /etc/hosts
     chk_echo " > 127.0.1.1    $fqdn $project" warning
     chk_echo " > above line added to /etc/hosts file"
     chk_echo_empty
@@ -101,6 +115,12 @@ function addApacheVhost () {
 
 ## Remove vhost ##
 function removeApacheVhost() {
+    # Make sure only root can run our script
+    if [[ $EUID -ne 0 ]]; then
+       echo "This script must be run as root" 1>&2
+       exit 1
+    fi
+
     chk_echo " >> Remove an existing virtualhost" '' separator
     chk_echo_empty
 
@@ -114,10 +134,11 @@ function removeApacheVhost() {
         a2dissite $vhost
         # read vhost file
         # grep root folder from vhost file
-        documentRootLine=$(trim "$(sudo cat /etc/apache2/sites-available/$vhost | grep 'DocumentRoot')")
+        documentRootLine=$(trim "$( cat /etc/apache2/sites-available/$vhost | grep 'DocumentRoot')")
         documentRoot=${documentRootLine##*[[:space:]]}
-        
-        if [ -d $documentRoot ] && [ $documentRoot != "/var/www/" ]
+        echo $documentRoot
+        exit 1;
+        if [ -d $documentRoot ] && [ $documentRoot != $userDir ]
         then
             chk_echo $documentRoot" has been deleted"
             # remove root folder
