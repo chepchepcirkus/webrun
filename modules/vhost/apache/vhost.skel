@@ -1,8 +1,8 @@
 <VirtualHost *:80>
     ServerName VAR_SERVERNAME
-    DocumentRoot /var/www/VAR_PROJECT/
+    DocumentRoot VAR_USERDIRVAR_PROJECT/
 	
-	<Directory /var/www/VAR_PROJECT/>
+	<Directory VAR_USERDIRVAR_PROJECT/>
 		Options -Indexes FollowSymLinks MultiViews
 		AllowOverride None
 		Order allow,deny

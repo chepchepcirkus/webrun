@@ -7,7 +7,7 @@ owner=$(who am i | awk '{print $1}')
 email='webmaster@localhost'
 sitesEnable='/etc/apache2/sites-enabled/'
 sitesAvailable='/etc/apache2/sites-available/'
-userDir='/var/www/'
+userDir='/var/www/html'
 
 ## Add vhost ##
 function addApacheVhost () {
@@ -28,7 +28,6 @@ function addApacheVhost () {
     read fqdn
     chk_echo_empty
 
-    # if project folder already exists
     if [ -d $userDir$project ];
     then
       chk_echo "Error : Folder already existing" error
@@ -77,7 +76,8 @@ function addApacheVhost () {
     chk_echo " > Apache configuration begin..."
     chk_echo_empty
 
-    awk '{sub("VAR_SERVERNAME", "'$fqdn'"); sub("VAR_PROJECT", "'$project'"); print}' $chk_module_d/vhost/apache/vhost.skel > /etc/apache2/sites-available/$project
+    touch /etc/apache2/sites-available/$project
+    awk '{sub("VAR_SERVERNAME", "'$fqdn'"); sub("VAR_USERDIR", "'$userDir'"); sub("VAR_PROJECT", "'$project'"); print}' $chk_module_d/vhost/apache/vhost.skel > /etc/apache2/sites-available/$project
 
     a2ensite $project
     service apache2 restart
@@ -136,8 +136,7 @@ function removeApacheVhost() {
         # grep root folder from vhost file
         documentRootLine=$(trim "$( cat /etc/apache2/sites-available/$vhost | grep 'DocumentRoot')")
         documentRoot=${documentRootLine##*[[:space:]]}
-        echo $documentRoot
-        exit 1;
+
         if [ -d $documentRoot ] && [ $documentRoot != $userDir ]
         then
             chk_echo $documentRoot" has been deleted"
